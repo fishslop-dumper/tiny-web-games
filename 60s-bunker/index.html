@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>60秒：地堡余生 — 核战前的最后一分钟</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ 标题 ============ -->
+  <section id="screen-title" class="screen active">
+    <div class="plate title-plate">
+      <div class="stamp">一份 1957 年的同人致敬作品</div>
+      <h1 class="big">60<span class="sec">秒</span></h1>
+      <h2 class="sub">地 堡 余 生</h2>
+      <p class="lede">防空警报只给你一分钟。<br>拿什么，丢下谁。</p>
+      <div class="btnrow">
+        <button class="btn btn-primary" id="btn-start">开始游戏</button>
+        <button class="btn" id="btn-howto">玩法说明</button>
+        <button class="btn btn-ghost" id="btn-sound">声音：开</button>
+      </div>
+      <p class="tiny">键盘操作 · 无需联网 · 一局约 8 分钟<br>
+      致敬《60 Seconds!》(Robot Gentleman) 的原创同人小游戏，非官方作品。</p>
+    </div>
+    <div class="halftone"></div>
+  </section>
+
+  <!-- ============ 简报 ============ -->
+  <section id="screen-brief" class="screen">
+    <div class="plate">
+      <div class="stamp red">紧急广播 · EMERGENCY BROADCAST</div>
+      <h2 class="hd">…重复，这不是演习。</h2>
+      <div class="radio-box">
+        防空警报已经拉响。据本台估计，你有 <b>60 秒</b>抵达最近的私人避难所。
+        请携带饮用水、罐头食品，以及家人。祝你好运，公民。
+      </div>
+      <ul class="brief-list">
+        <li><b>① 抢物资</b>：跑过自家房子，把水、罐头、收音机、急救包塞进包里。时间只够拿几件。</li>
+        <li><b>② 找家人</b>：多洛雷斯、玛丽·简、蒂米散在屋里。碰到他们，他们才会跟着你跑。</li>
+        <li><b>③ 进地堡</b>：走廊地板上的那扇门。慢一秒，就什么都不用管了。</li>
+        <li><b>④ 活下去</b>：在地堡里撑过 <b>15 天</b>，救援队就会经过这片区域。</li>
+      </ul>
+      <p class="tiny warn">提醒：地堡里只剩一点应急口粮。真正救命的是你带下去的东西。</p>
+      <div class="btnrow">
+        <button class="btn btn-primary" id="btn-go">拉响警报</button>
+        <button class="btn btn-ghost" id="btn-back-title">返回</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 抢物资 ============ -->
+  <section id="screen-play" class="screen">
+    <div class="play-wrap">
+      <div class="hud">
+        <div class="hud-cell">
+          <div class="hud-k">剩余时间</div>
+          <div class="hud-v timer" id="hud-timer">60.0</div>
+        </div>
+        <div class="hud-cell">
+          <div class="hud-k">已抓取</div>
+          <div class="hud-v" id="hud-count">0 件</div>
+        </div>
+        <div class="hud-cell grow">
+          <div class="hud-k">家人</div>
+          <div class="hud-v fam" id="hud-family"></div>
+        </div>
+        <div class="hud-cell">
+          <div class="hud-k">避难所</div>
+          <div class="hud-v" id="hud-hatch">— —</div>
+        </div>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="cv" width="960" height="600"></canvas>
+        <div class="overlay hidden" id="pause-overlay">
+          <div class="pause-card">
+            <h3>已暂停</h3>
+            <p>按 <b>P</b> 继续。核弹不会等你，但现在它也在暂停。</p>
+          </div>
+        </div>
+        <div class="overlay hidden" id="boom-overlay">
+          <div class="flash"></div>
+          <div class="boom-text">
+            <h2>轰————</h2>
+            <p id="boom-line"></p>
+          </div>
+        </div>
+      </div>
+      <div class="hintbar">
+        <span><b>W A S D</b> / 方向键 移动</span>
+        <span><b>空格</b> 抓取物资 · 带上家人</span>
+        <span><b>E</b> 进入避难所</span>
+        <span><b>P</b> 暂停</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 地堡 ============ -->
+  <section id="screen-bunker" class="screen">
+    <div class="bunker">
+      <div class="bhead">
+        <div class="bhead-day"><span id="bh-day">第 1 天</span><em id="bh-goal">目标：撑到第 15 天</em></div>
+        <div class="bhead-res">
+          <span class="chip">🥫 <b id="bh-food">0</b></span>
+          <span class="chip">💧 <b id="bh-water">0</b></span>
+          <span class="chip dim" id="bh-gear-wrap">装备：<b id="bh-gear">—</b></span>
+        </div>
+      </div>
+      <div class="bbody">
+        <div class="col-family">
+          <h3 class="colh">地堡成员</h3>
+          <div id="family"></div>
+          <div class="inv" id="inv"></div>
+        </div>
+        <div class="col-stage">
+          <div id="stage"></div>
+        </div>
+        <div class="col-log">
+          <h3 class="colh">避难所日志</h3>
+          <div class="log" id="log"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 结局 ============ -->
+  <section id="screen-end" class="screen">
+    <div class="plate">
+      <div class="stamp" id="end-stamp">结局</div>
+      <h2 class="hd" id="end-title">—</h2>
+      <p class="lede" id="end-text">—</p>
+      <div class="stats" id="end-stats"></div>
+      <div class="btnrow">
+        <button class="btn btn-primary" id="btn-again">再来一局</button>
+        <button class="btn btn-ghost" id="btn-end-title">回到标题</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="src/game-core.js"></script>
+<script src="src/game-scavenge.js"></script>
+<script src="src/game-bunker.js"></script>
+<script src="src/game-ui.js"></script>
+</body>
+</html>

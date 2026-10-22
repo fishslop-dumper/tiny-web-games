@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>永冬 · Frostfall</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ======================== 开始界面 ======================== -->
+<div id="start" class="start">
+  <canvas id="startBg"></canvas>
+  <div class="start-inner">
+    <div class="hero">
+      <div class="eyebrow">A CITY-SURVIVAL TRIBUTE · 1887</div>
+      <h1>永冬<span>FROSTFALL</span></h1>
+      <p class="tagline">地表已经停止转动。人类最后的火，是你们脚下的发电机。</p>
+      <p class="hero-copy">你是一座环形城市的执政官。城市围着发电机生长，一圈套着一圈；道路是血管，热量是血。把工人送进工厂，把煤送进炉膛，把每一顶帐篷拖进供热范围——然后在风暴到来之前，活下来。</p>
+      <ul class="hero-points">
+        <li><b>◈ 环形城市</b><span>16 个扇区 × 7 环，建筑只能沿路向外生长</span></li>
+        <li><b>❄ 热量规划</b><span>供热范围、蒸汽枢纽、发电机档位与过载</span></li>
+        <li><b>⚒ 生产链</b><span>煤 · 木 · 钢 · 生食→餐食 · 研究点</span></li>
+        <li><b>☠ 代价</b><span>寒冷会让人生病，饥饿与绝望会让人离开</span></li>
+      </ul>
+      <div class="hero-note">3D 场景由 Three.js 实时渲染（离线内置，无需联网）。灵感来自 11 bit studios 的《冰汽时代》。23 天一局，约 15 分钟。没有议会，没有派系——只有你和这座城市。</div>
+    </div>
+
+    <div class="start-card">
+      <h2>开始执政</h2>
+      <div class="field-label">难度</div>
+      <div id="diffPick" class="diff-row"></div>
+      <div class="field-label">地图种子</div>
+      <div class="seed-row">
+        <input id="seedInput" type="number" value="1887">
+        <button id="seedRandom" class="ghost small">随机</button>
+      </div>
+      <button id="startBtn" class="primary big">点亮发电机</button>
+      <p class="tiny">左键选择 / 建造 · 拖拽平移 · 滚轮缩放 · <b>Q / E</b> 旋转视角 · 空格暂停 · 1 2 3 调速</p>
+      <div class="card-hint">
+        <b>第一件事：</b>建一座煤矿，否则 4 天后发电机就会熄火。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== 游戏界面 ======================== -->
+<div id="app" class="app" hidden>
+  <header class="topbar">
+    <div class="weather">
+      <div class="w-main">
+        <div class="w-temp"><b id="wTemp">-20</b><i>°C</i></div>
+        <div class="w-side">
+          <div id="wLabel" class="w-label">初冬</div>
+          <div id="wHeat" class="w-heat">供热 +15</div>
+        </div>
+      </div>
+      <div class="w-bar"><span id="wBar"></span></div>
+    </div>
+
+    <div id="resBar" class="res-bar"></div>
+
+    <div class="pop-box">
+      <div class="pop-row"><b id="popNum">80</b><span>人</span></div>
+      <div class="pop-sub"><span id="popSick">病 0</span><span id="popFree">闲 0</span></div>
+    </div>
+
+    <div class="mood-box">
+      <div class="mood" title="希望：低于 0 城市会弃你而去">
+        <span class="mood-k">希望</span>
+        <span class="mood-bar"><i id="hopeBar"></i></span>
+        <span class="mood-v" id="hopeVal">55</span>
+      </div>
+      <div class="mood" title="不满：满 100 你会被赶下台">
+        <span class="mood-k">不满</span>
+        <span class="mood-bar dis"><i id="disBar"></i></span>
+        <span class="mood-v" id="disVal">8</span>
+      </div>
+    </div>
+
+    <div class="clock">
+      <div id="clockDay" class="clock-day">第 1 天</div>
+      <div class="clock-time"><span id="clockTime">06:00</span><span id="clockNext" class="clock-next"></span></div>
+    </div>
+
+    <div id="speedBox" class="speed-box">
+      <button data-speed="0" title="暂停 (空格)">❚❚</button>
+      <button data-speed="1" title="1 倍速 (1)">▶</button>
+      <button data-speed="2" title="2 倍速 (2)">▶▶</button>
+      <button data-speed="3" title="3 倍速 (3)">▶▶▶</button>
+    </div>
+
+    <div class="top-actions">
+      <button id="btnTech" class="ghost"><span class="g">⚛</span>科技<em id="rpBadge">0</em></button>
+      <button id="btnLog" class="icon-btn" title="日志">≡</button>
+      <button id="btnHelp" class="icon-btn" title="帮助">?</button>
+    </div>
+  </header>
+
+  <div class="stage">
+    <canvas id="cv"></canvas>
+    <div class="vig"></div>
+    <div class="palette" id="palette"></div>
+    <div class="side" id="side"></div>
+    <div class="toasts" id="toasts"></div>
+    <div class="tooltip" id="tooltip" hidden></div>
+    <div class="viewbtns">
+      <button id="btnHome" title="回到中心">◎</button>
+      <button id="btnZoomIn" title="放大">+</button>
+      <button id="btnZoomOut" title="缩小">−</button>
+    </div>
+  </div>
+
+  <div class="modal-root" id="modalRoot"></div>
+  <div class="banner" id="banner" hidden></div>
+</div>
+
+<script src="vendor/three.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/render.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

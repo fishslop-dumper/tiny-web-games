@@ -1,0 +1,21 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+
+# logs and scratch
+*.log
+*.err
+*.tmp
+tmp/
+node_modules/
+
+# 60s-bunker single-file build (regenerate with: node dev/build.js)
+60s-bunker/60秒地堡余生.html
+
+# browser profiles / captured sessions (never commit)
+.profile/
+.session.json
+nuaa.toml

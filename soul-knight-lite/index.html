@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>元气骑士 · 轻量版</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <div id="stage">
+    <canvas id="cv" width="384" height="216"></canvas>
+
+    <!-- ================= HUD ================= -->
+    <div id="hud" class="layer">
+      <div class="hud-tl">
+        <div class="pips" id="hpPips"></div>
+        <div class="pips armor" id="armorPips"></div>
+        <div class="ebar"><i id="energyFill"></i><span id="energyTxt">160</span></div>
+      </div>
+
+      <div class="hud-tr">
+        <div class="tag" id="floorTag">1F 苔洞</div>
+        <div class="tag coin" id="coinTag"><i class="coin-ico"></i><b>0</b></div>
+      </div>
+
+      <div class="hud-bl" id="slots">
+        <div class="slot" data-i="0"><b class="nm">手枪</b><em class="en">0</em><i class="key">1</i></div>
+        <div class="slot" data-i="1"><b class="nm">--</b><em class="en">-</em><i class="key">2</i></div>
+      </div>
+
+      <div class="hud-br">
+        <div class="dash"><i id="dashFill"></i><span>冲刺</span></div>
+        <div class="hint" id="hintTag">把怪清干净，门就会开</div>
+      </div>
+
+      <div class="bossbar" id="bossBar">
+        <b id="bossName">BOSS</b>
+        <div class="btrack"><i id="bossFill"></i></div>
+      </div>
+
+      <div class="wtip" id="wtip"></div>
+      <div class="maplegend" id="mapLegend">
+        <span><i style="background:#ff6a7a"></i>BOSS</span>
+        <span><i style="background:#ffd35c"></i>宝箱</span>
+        <span><i style="background:#5ee08a"></i>商店</span>
+        <span><i style="background:#c9a0ff"></i>祭坛</span>
+        <span><i style="background:#ff9a5a"></i>精英</span>
+      </div>
+    </div>
+
+    <!-- ================= 菜单层 ================= -->
+    <div id="ui" class="layer">
+
+      <section class="screen" id="scrTitle">
+        <div class="logo">
+          <span class="l1">元气骑士</span>
+          <span class="l2">轻 量 版</span>
+        </div>
+        <p class="sub">一命通关 · 三层地牢 · 捡枪就打</p>
+        <div class="cta" id="btnStart">开 始 冒 险</div>
+        <div class="keys">
+          <span><b>WASD</b> 移动</span><span><b>鼠标</b> 瞄准 / <b>左键</b> 攻击</span>
+          <span><b>空格</b> 冲刺</span><span><b>Q</b> 换武器</span><span><b>E</b> 拾取</span><span><b>ESC</b> 暂停</span>
+        </div>
+        <div class="rec" id="recTag"></div>
+      </section>
+
+      <section class="screen" id="scrChar">
+        <h2>选择你的骑士</h2>
+        <div class="chars" id="charList"></div>
+        <p class="tip">点击卡片选择 · Enter 确认 · 难度随楼层上升，别贪</p>
+      </section>
+
+      <section class="screen" id="scrTalent">
+        <h2 id="talentTitle">选择天赋</h2>
+        <div class="talents" id="talentList"></div>
+        <div class="btns"><div class="cta sm ghost" id="btnReroll">换一批（15 金币）</div></div>
+        <p class="tip">三选一 · 天赋影响整局 · 金币可以换一批选项</p>
+      </section>
+
+      <section class="screen" id="scrPause">
+        <h2>已暂停</h2>
+        <div class="btns">
+          <div class="cta sm" id="btnResume">继续（ESC）</div>
+          <div class="cta sm ghost" id="btnQuit">放弃本局</div>
+        </div>
+      </section>
+
+      <section class="screen" id="scrOver">
+        <h2 class="dead">你 倒 下 了</h2>
+        <div class="stats" id="overStats"></div>
+        <div class="btns"><div class="cta sm" id="btnAgain">再 来 一 局</div></div>
+      </section>
+
+      <section class="screen" id="scrWin">
+        <h2 class="win">通 关 ！</h2>
+        <div class="stats" id="winStats"></div>
+        <div class="btns"><div class="cta sm" id="btnAgain2">再 战 一 次</div></div>
+      </section>
+
+      <div class="toast" id="toast"></div>
+      <div class="fade" id="fade"></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/core.js"></script>
+<script src="js/art.js"></script>
+<script src="js/weapons.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/dungeon.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

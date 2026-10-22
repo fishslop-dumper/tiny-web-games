@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>群星：微光银河 · Stellaris Mini</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ======================== 开始界面 ======================== -->
+<div id="start-screen" class="start-screen">
+  <canvas id="start-bg"></canvas>
+  <div class="start-inner">
+    <div class="start-hero">
+      <div class="eyebrow">A TINY 4X TRIBUTE · 2200 A.D.</div>
+      <h1>群星<span>微光银河</span></h1>
+      <p class="tagline">从一颗行星出发，点亮整条旋臂。</p>
+      <div class="hero-copy">
+        <p>你是一支年轻星际文明的领袖。派出科研船丈量星海，让殖民船在陌生世界扎根，用合金与外交守住你的边界——银河很小，但足够装下你的野心。</p>
+      </div>
+      <ul class="hero-points">
+        <li><b>🔭 探索</b><span>64 个星系、超空间航道与远古生物</span></li>
+        <li><b>🌱 扩张</b><span>殖民、建造太空站、经营行星区划</span></li>
+        <li><b>🔬 研究</b><span>三大领域、40+ 项科技与传统</span></li>
+        <li><b>⚔ 征服</b><span>舰队、星际基地与轨道轰炸</span></li>
+      </ul>
+      <div class="hero-note">灵感来自 Paradox 的《群星》。这是一个粉丝向的迷你致敬作品，一局约 10–20 分钟。</div>
+    </div>
+
+    <div class="start-card">
+      <h2>创建你的帝国</h2>
+      <label class="field">
+        <span>帝国名称</span>
+        <input id="empire-name" maxlength="12" value="大肥鱼帝国" autocomplete="off">
+      </label>
+
+      <div class="field-label">帝国颜色</div>
+      <div id="color-picker" class="swatches"></div>
+
+      <div class="field-label">物种特质 <em>选择一项</em></div>
+      <div id="trait-picker" class="trait-grid"></div>
+
+      <div class="field-label">难度</div>
+      <div id="difficulty-picker" class="diff-row"></div>
+
+      <div class="seed-row">
+        <label class="field seed-field"><span>银河种子</span><input id="seed-input" type="number" value="22000217"></label>
+        <button id="seed-random" class="ghost small" type="button">随机</button>
+      </div>
+
+      <button id="start-btn" class="primary big" type="button">启程 · 进入银河</button>
+      <button id="continue-btn" class="ghost" type="button" hidden>继续上次的银河</button>
+      <p class="small">左键选择 · 右键移动舰队 · 空格暂停 · 1/2/3 调速</p>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== 游戏界面 ======================== -->
+<div id="game-ui" hidden>
+  <canvas id="galaxy-canvas"></canvas>
+  <div class="vignette"></div>
+
+  <header id="topbar" class="topbar">
+    <div id="empire-badge" class="empire-badge"></div>
+    <div class="date-box">
+      <div id="date-main" class="date-main">2200年1月1日</div>
+      <div id="speed-label" class="speed-label">已暂停</div>
+    </div>
+    <div class="speed-controls" id="speed-controls">
+      <button data-speed="0" title="暂停 (空格)">⏸</button>
+      <button data-speed="1" title="正常速度 (1)">▶</button>
+      <button data-speed="2" title="2 倍速 (2)">▶▶</button>
+      <button data-speed="3" title="3 倍速 (3)">▶▶▶</button>
+    </div>
+    <div id="resource-bar" class="resource-bar"></div>
+    <div class="top-actions">
+      <button id="btn-save" class="icon-btn" title="保存游戏">💾</button>
+      <button id="btn-load" class="icon-btn" title="读取存档">⟲</button>
+      <button id="btn-help" class="icon-btn" title="帮助 / 教程">❓</button>
+    </div>
+  </header>
+
+  <aside id="left-panel" class="panel left-panel"></aside>
+  <aside id="right-panel" class="panel right-panel"></aside>
+
+  <footer id="bottombar" class="bottombar">
+    <span class="hint">左键选择 · 右键移动舰队 · 滚轮缩放 · 拖拽平移 · 菱形=殖民地</span>
+    <span class="divider"></span>
+    <label class="toggle"><input type="checkbox" id="toggle-borders" checked> 边界</label>
+    <label class="toggle"><input type="checkbox" id="toggle-lanes" checked> 航道</label>
+    <label class="toggle"><input type="checkbox" id="toggle-autopause" checked> 自动暂停</label>
+    <span class="divider"></span>
+    <button id="btn-colonies" class="ghost small" title="殖民地总览">🏙 殖民地</button>
+    <button id="btn-yard" class="ghost small" title="打开帝国船坞">⚓ 船坞</button>
+    <button id="btn-war" class="ghost small" title="战争指挥">🎯 战争</button>
+    <button id="btn-home" class="ghost small">🏠 首都</button>
+  </footer>
+
+  <div id="map-legend" class="map-legend" hidden></div>
+  <div id="toasts" class="toasts"></div>
+  <div id="tooltip" class="tooltip" hidden></div>
+  <div id="modal-root" class="modal-root"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/galaxy.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
