@@ -1,8 +1,8 @@
-# AIslop 小游戏合集 · tiny-web-games
+﻿# AIslop 小游戏合集 · tiny-web-games
 
 四个纯前端、零依赖、离线可玩的浏览器小游戏。全部是原生 HTML/CSS/JS，**打开 `index.html` 就能玩**，不需要构建、不需要服务器、不联网。
 
-在线试玩（GitHub Pages）：`https://<你的用户名>.github.io/tiny-web-games/`
+在线试玩（GitHub Pages）：**https://fishslop-dumper.github.io/tiny-web-games/**  ← 点这里直接玩
 
 | 游戏 | 类型 | 规模 | 直接打开 |
 |---|---|---|---|
